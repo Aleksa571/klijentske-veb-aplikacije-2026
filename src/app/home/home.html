@@ -1,0 +1,59 @@
+@if(flights().length > 0) {
+<div class="search-wrapper">
+    <mat-form-field>
+        <mat-label>Search</mat-label>
+        <input matInput type="text" [(ngModel)]="search" (keyup)="filter()">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Destination</mat-label>
+        <mat-select [(ngModel)]="destination" (ngModelChange)="filter()">
+            <mat-option value="">All Destinations</mat-option>
+            @for (dest of getDestinations(); track dest) {
+            <mat-option [value]="dest">{{dest}}</mat-option>
+            }
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>From Date</mat-label>
+        <mat-select [(ngModel)]="fromDate" (ngModelChange)="filter()">
+            @for (date of getAvilableDates(); track date) {
+            <mat-option [value]="date">{{date}}</mat-option>
+            }
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>To Date</mat-label>
+        <mat-select [(ngModel)]="toDate" (ngModelChange)="filter()">
+            @for (date of getAvilableDates(); track date) {
+            <mat-option [value]="date">{{date}}</mat-option>
+            }
+        </mat-select>
+    </mat-form-field>
+</div>
+<div class="card-wrapper">
+    @for (f of filteredFlights(); track $index){
+    <mat-card class="flight-card" appearance="outlined">
+        <img mat-card-image [src]="utils.getImageUrl(f)" [alt]="f.destination">
+        <mat-card-content class="card-content">
+            <mat-card-title>
+                <strong>{{f.destination}}</strong>
+            </mat-card-title>
+            <mat-card-subtitle>{{utils.formatDate(f.scheduledAt)}}</mat-card-subtitle>
+        </mat-card-content>
+        <mat-card-actions>
+            <a [routerLink]="`/details/${f.id}`" matButton>
+                <mat-icon fontIcon="description" /> Details
+            </a>
+            @if (authService.getActiveUser()) {
+            <a [routerLink]="`/details/${f.id}/order`" matButton>
+                <mat-icon fontIcon="airplane_ticket" /> Book now
+            </a>
+            }
+        </mat-card-actions>
+    </mat-card>
+    }
+</div>
+}
+@else {
+<app-loading />
+}
