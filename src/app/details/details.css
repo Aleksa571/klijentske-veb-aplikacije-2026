@@ -19,3 +19,14 @@
     margin-left: auto;
     margin-right: auto;
 }
+.details-card {
+    width: 560px;
+}
+
+.details-img {
+    max-width: 100%;
+}
+
+.map-card {
+    max-width: 1130px;
+}

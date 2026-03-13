@@ -60,3 +60,18 @@
 .mb-3 {
     margin-bottom: 15px;
 }
+.user-card {
+    width: 340px;
+}
+
+.user-details {
+    height: 170px;
+}
+
+.user-info {
+    justify-content: start;
+}
+
+.user-img {
+    border-radius: 16px;
+}
